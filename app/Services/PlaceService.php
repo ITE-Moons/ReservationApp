@@ -229,8 +229,14 @@ class PlaceService extends GenericService
 
     public function getPlacesByCatId($validatedData){
 
-        $places = Place::where('category_id', $validatedData['id'])->get();
-        return $places;
+        $user = Auth::user();
+        $places = Place::with('favouritedBy')->where('status','1')->where('category_id', $validatedData['id'])->get();
+
+            $places->each(function ($place) use ($user) {
+                $place->is_favourite = $place->favouritedBy->contains($user);
+            });
+
+            return $places;
     }
 
     public function filterPlace($validatedData)

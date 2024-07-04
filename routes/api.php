@@ -116,6 +116,7 @@ Route::group([
     'controller' => FavouriteController::class,
     'middleware' => 'auth:api'
 ], function () {
+    Route::get('/myFavorite', 'getMyFavorite');
     Route::delete('/{id}', 'delete');
     Route::put('/{id}', 'update');
     Route::post('/', 'store');

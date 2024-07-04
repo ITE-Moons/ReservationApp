@@ -12,6 +12,7 @@ class PlaceResource extends GenericResource
 			'id'                       =>  $this->id,
             'status'                   =>  $this->status,
             'is_favourite'             => $this->is_favourite ? 1 : 0,
+            'day_hour'                 =>  $this->day_hour,
 			'name'                     =>  $this->name,
 			'address'                  =>  $this->toResource($this->address, AddressResource::class),
 			'owner_id'                 =>  $this->user('id')->get('name'),

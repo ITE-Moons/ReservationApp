@@ -13,7 +13,6 @@ class RateWithCommentRequest extends GenericRequest
     private function storeValidator()
     {
         return [
-			'user_id'   =>  'required|integer|exists:users,id',
 			'place_id'  =>  'required|integer|exists:places,id',
 			'text'      =>  'required|string|max:65535',
 			'rate'      =>  'required|integer',
