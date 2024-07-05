@@ -19,6 +19,17 @@ class PlaceController extends GenericController
         parent::__construct(new PlaceRequest(), new PlaceResource([]), new PlaceService(new Place()));
     }
 
+    public function store(){
+
+        $validatedData = request()->validate($this->request->rules());
+        $model = $this->placeService->store($validatedData);
+
+        return $this->successResponse(
+            $this->toResource($model, $this->resource),
+            __('messages.dataFetchedSuccessfully')
+        );
+
+    }
     public function getAll(){
         $places = $this->placeService->getAll();
         return $this->successResponse(

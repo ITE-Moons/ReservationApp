@@ -34,7 +34,6 @@ class PlaceService extends GenericService
 
         $validatedData['owner_id'] = Auth::user()->id;
         $validatedData['status'] = '0';
-        $validatedData['date_of_add'] = Carbon::now();
 
         $model = Place::create($validatedData);
 

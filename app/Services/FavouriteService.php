@@ -13,31 +13,25 @@ class FavouriteService extends GenericService
     }
 
     public function store($validatedData)
-    {
-        DB::beginTransaction();
+{
+    DB::beginTransaction();
 
-        $favorite = Favourite::where('place_id',$validatedData['place_id'])->where('user_id',Auth::user()->id)->first();
+    $favorite = Favourite::where('place_id', $validatedData['place_id'])
+                         ->where('user_id', Auth::user()->id)
+                         ->first();
 
-        $message = "";
-        if($favorite != null){
-            $favorite->delete();
-            DB::commit();
-            $message ="Place removed from Favorite successfully !";
-            // return response()->json(['message' => "Place removed from Favorite successfully !"], 201);
-        }
-        else{
-
-            $validatedData['user_id'] = Auth::user()->id;
-            Favourite::create($validatedData);
-            DB::commit();
-
-            $message ="Place added to Favorite successfully !";
-
-        }
-
-        return $message;
-
+    if ($favorite != null) {
+        $favorite->delete();
+        DB::commit();
+        return ['message' => "Place removed from Favorite successfully !"];
+    } else {
+        $validatedData['user_id'] = Auth::user()->id;
+        $model = Favourite::create($validatedData);
+        DB::commit();
+        return $model;
     }
+}
+
 
     public function getMyFavorite(){
         $model = Favourite::where('user_id', Auth::user()->id)->get();

@@ -24,13 +24,18 @@ class FavouriteController extends GenericController
     {
         $validatedData = request()->validate($this->request->rules());
 
-        $message = $this->service->store($validatedData);
+        $result = $this->service->store($validatedData);
+
+        if (is_array($result) && isset($result['message'])) {
+            return response()->json(['message' => $result['message']], 201);
+        }
 
         return $this->successResponse(
-            null,
-            $message
+            $this->toResource($result, $this->resource),
+            __('messages.dataFetchedSuccessfully')
         );
     }
+
 
     public function getMyFavorite(){
         $favorites = $this->favouriteService->getMyFavorite();

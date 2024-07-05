@@ -15,6 +15,7 @@ class Place extends GenericModel
     protected $fillable = [
 		'name',
 		'owner_id',
+        'day_hour',
 		'maximum_capacity',
 		'price_per_hour',
 		'space',
