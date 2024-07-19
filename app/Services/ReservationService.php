@@ -354,6 +354,7 @@ public function makeHour($validatedData)
 
     $totalPrice = $place->price_per_hour * $interval;
 
+    $extensions = [];
     if (isset($validatedData['extensions'])) {
         foreach ($validatedData['extensions'] as $extensionId) {
             $extension = Extension::findOrFail($extensionId);
@@ -362,13 +363,24 @@ public function makeHour($validatedData)
                 return response()->json(['message' => "Extension ID $extensionId does not belong to the selected place."], 400);
             }
             $totalPrice += $extension->price;
+            $extensions = $extension->id;
         }
     }
-    return $totalPrice;
+    $response = [
+        'total_price' => $totalPrice,
+        'place_id' => $place->id,
+        'type_id' => intVal($validatedData['type_id']),
+        'date_and_time' => $validatedData['date_and_time'],
+        'start_time' => $startTime->format('H:i:s'),
+        'end_time' => $endTime->format('Y-m-d H:i:s'),
+        'extensions' => $extensions
+    ];
+
+    return $response;
+ }
+    else{
+        return response()->json(['message' => "the plasc is not hour Type !"]);
     }
-        else{
-            return response()->json(['message' => "the plasc is not hour Type !"]);
-        }
 }
 
 
