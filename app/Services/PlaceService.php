@@ -191,9 +191,9 @@ class PlaceService extends GenericService
             $user = Auth::user();
             $places = Place::with('favouritedBy')->where('status','1')->get();
 
-            $places->each(function ($place) use ($user) {
-                $place->is_favourite = $place->favouritedBy->contains($user);
-            });
+            // $places->each(function ($place) use ($user) {
+            //     $place->is_favourite = $place->favouritedBy->contains($user);
+            // });
 
             return $places;
         }
@@ -244,7 +244,7 @@ class PlaceService extends GenericService
         if (isset($validatedData['sort_by_price'])) {
 
             if ($validatedData['sort_by_price'] == 'desc') {
-                return Place::orderByDesc('price_per_hour')->get();
+                return Place::orderBy('price_per_hour')->get();
             }
         }
         //test2
@@ -265,7 +265,6 @@ class PlaceService extends GenericService
          if (isset($validatedData['sort_by_rate'])) {
             if ($validatedData['sort_by_rate'] == 'desc') {
                 $places = Place::with('rateWithComments')->get();
-
                 $places = $places->map(function ($place) {
                     $place->average_rate = $place->rateWithComments->avg('rate');
                     return $place;

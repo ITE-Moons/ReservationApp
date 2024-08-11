@@ -49,12 +49,12 @@ class ReservationController extends GenericController
     }
 
     public function storeTest(ReservationRequest $request){
-        return $this->reservationService->store($request->all());
-
+        $model = $this->reservationService->store($request->all());
+        return $this->successResponse($model);
     }
     public function storeFromDay(ReservationRequest $request){
-        return $this->reservationService->storeFromDay($request->all());
-
+        $model = $this->reservationService->storeFromDay($request->all());
+        return $this->successResponse($model);
     }
 
     public function makeHour(ReservationRequest $request){

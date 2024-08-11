@@ -8,10 +8,10 @@ class ReservationResource extends GenericResource
     {
         return [
 			'id'             =>  $this->id,
-			'place'       =>  $this->place('id')->get('name'),
+			'place'       =>  $this->place,
             'extension'   =>  ExtensionResource::collection($this->whenLoaded('extensions')),
-			'user'        =>  $this->user('id')->get('name'),
-			'type'        =>  $this->type('id')->get('name'),
+			'user'        =>  $this->user,
+			'type'        =>  $this->type,
 			'total_price'    =>  $this->total_price,
 			'date_and_time'  =>  $this->date_and_time,
             'day'            =>  $this->day,
